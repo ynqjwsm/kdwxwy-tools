@@ -24,3 +24,7 @@ def load_txt(src_file_name, splitter='\t', drop_header=True, header_lines=1, enc
             data.append(line_data)
     data = data[header_lines:] if drop_header else data
     return data
+
+
+def cvt_float(source):
+    return [[float(c) for c in r] for r in source]
