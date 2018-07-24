@@ -21,10 +21,15 @@ def write_xls(dst_file, data):
     workbook = xlwt.Workbook(encoding='utf8')
     for sheet_name in data:
         worksheet = workbook.add_sheet(sheet_name)
-        for row in range(0, len(data[sheet_name]['header'])):
-            for col in range(0, len(data[sheet_name]['header'][row])):
-                worksheet.write(row, col, label=data[sheet_name]['header'][row][col])
+        rowId = 0
+        colId = 0
+        for col in range(0, len(data[sheet_name]['header'])):
+            worksheet.write(rowId, col, label=data[sheet_name]['header'][col])
+        rowId += 1
         for row in range(0, len(data[sheet_name]['data'])):
             for col in range(0, len(data[sheet_name]['data'][row])):
-                worksheet.write(row, col, label=data[sheet_name]['data'][row][col])
+                worksheet.write(rowId, colId, label=data[sheet_name]['data'][row][col])
+                colId += 1
+            colId = 0
+            rowId += 1
     workbook.save(dst_file)
