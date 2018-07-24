@@ -1,4 +1,4 @@
-import re
+import re, queue
 
 
 def is_float(content):
@@ -11,3 +11,14 @@ def is_int(content):
     return pattern.fullmatch(content) is not None
 
 
+def is_float_list(source):
+    wq = queue.Queue()
+    wq.put(source)
+    while not wq.empty():
+        for item in wq.get():
+            if type(item) == list:
+                wq.put(item)
+            else:
+                if not is_float(item):
+                    return False
+    return True
