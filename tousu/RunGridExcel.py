@@ -14,12 +14,16 @@ for grid_src in load_txt('source/Grid.tsv'):
     grids[grid_src[0]] = points
 
 tousu_resp = []
+find = False
 for src in tousu:
     for grid in grids:
         if IsPtInPoly(float(src[4]), float(src[5]), grids[grid]):
             tousu_resp.append(src + [grid])
+            find = True
             break
-    tousu_resp.append(src + ['无匹配单元格'])
+    if not find:
+        tousu_resp.append(src + ['无匹配单元格'])
+        find = False
 
 counter = {}
 for lst in tousu_resp:
@@ -27,7 +31,7 @@ for lst in tousu_resp:
         counter[lst[6]] += 1
     else:
         counter[lst[6]] = 1
-counter_list = [[k, counter[k]] for k in counter]
+counter_list = sorted([[k, counter[k]] for k in counter], key=lambda x: x[1], reverse=True)
 
 
 excel_data = {'总表': {'header': ['单元格名称[单元格编号][所属支局编号]', '工单数量'], 'data': counter_list}, '详表': {'header': out_header, 'data': tousu_resp}}
