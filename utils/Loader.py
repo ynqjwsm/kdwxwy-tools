@@ -20,7 +20,7 @@ def load_txt(src_file_name, splitter='\t', drop_header=True, header_lines=1, enc
     with open(src_file_name, 'r', encoding=enc) as sCell:
         data = []
         for line in sCell.readlines():
-            line_data = line.split(splitter)
+            line_data = line.replace('\r\n', '').replace('\n', '').split(splitter)
             data.append(line_data)
     data = data[header_lines:] if drop_header else data
     return data

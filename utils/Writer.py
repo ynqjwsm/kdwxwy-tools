@@ -5,7 +5,8 @@ def write_csv(dst_file, data, header):
     if len(data) == 0 or len(data[0]) != len(header):
         return
     with open(dst_file, 'w', newline='') as out:
-        writer = csv.writer(out)
+        writer = csv.writer(out, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
         writer.writerow(header)
         for row in data:
             writer.writerow(row)
